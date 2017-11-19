@@ -96,7 +96,7 @@ public class Perceptron implements IPerceptron {
 		}
 		// and propagate his w to his left-side perceptrons to calculate
 		for (int i = 0; i < prevPerceptrons.size() -1; ++i) { // -1 because we dont need to call it for bias direcly as it is not a real perspectron...
-			prevPerceptrons.get(i).calculateDerivative(weights.get(i));
+			prevPerceptrons.get(i).calculateDerivative(weights.get(i)*errorTotalDerivate);
 		}
 		
 	}
@@ -105,6 +105,17 @@ public class Perceptron implements IPerceptron {
 	@Override
 	public ArrayList<Double> getDerivatives() {
 		return derivatives;
+	}
+
+
+	@Override
+	public void modifyWeights(Double learningRate) {
+		for (int i = 0; i < weights.size(); ++i) {
+			System.out.println(weights.size() + "weights: " + weights.get(i)+ ", der: " + derivatives.get(i)+ " learning: " + learningRate);
+			weights.set(i, weights.get(i) - derivatives.get(i) * learningRate); //i-th element is changed to something else
+			System.out.println("modosult suly: "+ weights.get(i));
+		}
+		
 	}
 	
 	

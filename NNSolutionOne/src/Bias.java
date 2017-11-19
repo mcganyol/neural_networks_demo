@@ -59,5 +59,11 @@ public class Bias implements IPerceptron {
 		return null;
 	}
 
+	@Override
+	public void modifyWeights(Double x) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

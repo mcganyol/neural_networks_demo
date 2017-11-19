@@ -5,6 +5,7 @@ public class NeuralNetwork {
 	private ArrayList<ILayer> nnLayers;
 	private Double finalOutput;  // it should be an ArrayList<Double> if not a single output
 	private Double target;
+	private double learningRate;
 	
 	
 	public NeuralNetwork() {
@@ -45,9 +46,6 @@ public class NeuralNetwork {
 		for (ILayer il : nnLayers) {
 			il.finalizeStructure();
 		}
-
-		
-		
 	}
 
 
@@ -64,19 +62,37 @@ public class NeuralNetwork {
 		return nnLayers.size();
 	}
 	
+	
 	public ILayer getLayer(int num) {
 		return nnLayers.get(num);
 	}
 	
+
 	public void setTarget(Double t) {
 		target = t;
 	}
 
 
 	public void calculateDerivative() {
-		Double ErrorTotalDerivate = - (finalOutput - target); //why the -1 is beyond me at this point
+		Double ErrorTotalDerivate = finalOutput - target; //why the -1 is beyond me at this point
+		System.out.println("output: " + finalOutput + " target:" + target);
 		for (int a = nnLayers.get(this.getWidth() - 1).getDepth() - 1; a >= 0; --a) { //we need the i-th layer perceptrons in backward order
 			nnLayers.get(this.getWidth() - 1).getPerceptron(a).calculateDerivative(ErrorTotalDerivate);
+		}
+	}
+
+
+	public void setLearningRate(Double double1) {
+		learningRate = double1;
+	}
+
+
+	public void modifyWeights() {
+		for (int a = 0; a < this.getWidth(); ++a) { //we need the i-th layer perceptrons in backward order
+			for (int i = 0; i < this.getLayer(a).getDepth(); ++i) {
+				nnLayers.get(a).getPerceptron(i).modifyWeights(learningRate * (target - finalOutput) * 2);
+			}
+			
 		}
 		
 	}

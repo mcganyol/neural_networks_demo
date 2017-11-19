@@ -66,6 +66,13 @@ public class InputPerceptron implements IPerceptron{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public void modifyWeights(Double x) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

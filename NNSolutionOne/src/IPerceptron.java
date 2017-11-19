@@ -11,5 +11,6 @@ public interface IPerceptron {
 	public void setLinear(boolean lastLayer);
 	public void calculateDerivative(Double errorTotalDerivate);
 	public ArrayList<Double> getDerivatives();
+	public void modifyWeights(Double learningRate);
 	
 }
