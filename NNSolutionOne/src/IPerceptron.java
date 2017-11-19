@@ -10,5 +10,6 @@ public interface IPerceptron {
 	public void setOutput(Double double1);
 	public void setLinear(boolean lastLayer);
 	public void calculateDerivative(Double errorTotalDerivate);
+	public ArrayList<Double> getDerivatives();
 	
 }

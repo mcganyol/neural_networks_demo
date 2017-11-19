@@ -19,12 +19,11 @@ public class Perceptron implements IPerceptron {
 	void randomWeight() { // package visibility :)
 		weights = new ArrayList<Double>();
 		Random r = new Random();
-		for (int i = 0; i < prevPerceptrons.size(); ++i) {
+		for (int i = 0; i < prevPerceptrons.size() - 2; ++i) { // -2 because we dont want a random value for bias
 			Double random = r.nextGaussian()*0.1; 		// 0 varhato erteku, 0.1 szorasu random szamok
 			weights.add(random);
 		}
-		
-		weights.add(0.0); //bias initialized as 0
+		weights.add(0.0); //bias initialized as with 0 weight
 	}
 	
 	
@@ -33,11 +32,9 @@ public class Perceptron implements IPerceptron {
 		for (int i = 0; i < prevPerceptrons.size(); ++i) {
 			inputValue += prevPerceptrons.get(i).getOutput() * weights.get(i);
 		}
-		inputValue += 1 * weights.get(weights.size() - 1); //it is always 1 on "bias leg" multiplied by it's own weight
 		if (linearPerceptron) {
 			outputValue = inputValue;
 			doutPerDnet = 1.0; // linear perceptron x derivate is 1
-			//System.out.println("input:" + inputValue + " output:" +outputValue);
 		}
 		else {
 			outputValue = Math.max(0.0,inputValue);
@@ -57,7 +54,11 @@ public class Perceptron implements IPerceptron {
 
 	@Override
 	public void finalizeStructure(ArrayList<IPerceptron> perceptronList) {
-		prevPerceptrons = perceptronList;
+		for (IPerceptron ip : perceptronList) {
+			prevPerceptrons.add(ip);
+		}
+		prevPerceptrons.add(Bias.getInstance());
+		
 		if (weights == null) randomWeight();
 	}
 
@@ -89,12 +90,21 @@ public class Perceptron implements IPerceptron {
 
 	@Override
 	public void calculateDerivative(Double errorTotalDerivate) {
-		derivatives = new ArrayList<Double>();
+		derivatives = new ArrayList<Double>();  // calculate his own derivatives
 		for (int i = 0; i < weights.size(); ++i) {
 			derivatives.add(prevPerceptrons.get(i).getOutput() * errorTotalDerivate * doutPerDnet);
-			
+		}
+		// and propagate his w to his left-side perceptrons to calculate
+		for (int i = 0; i < prevPerceptrons.size() -1; ++i) { // -1 because we dont need to call it for bias direcly as it is not a real perspectron...
+			prevPerceptrons.get(i).calculateDerivative(weights.get(i));
 		}
 		
+	}
+
+
+	@Override
+	public ArrayList<Double> getDerivatives() {
+		return derivatives;
 	}
 	
 	

@@ -65,8 +65,13 @@ public class NNSolutionThree {
 		
 		io.writeIntValues(nn.getStructure());
 				
-		for (int i = 0; i < outputTable.size(); ++i) {
-			io.writeValues(outputTable.get(i));
+		//derivatives
+		
+		for (int layer = 1; layer < nn.getWidth(); ++layer) {  //starts from 1 to avoid asking the weights of "input layer" which makes no sense
+			ILayer tempL = nn.getLayer(layer);
+			for (int x = 0; x < tempL.getDepth(); ++x) {
+				io.writeValues(tempL.getPerceptron(x).getDerivatives());
+			}
 		}
 		
 		

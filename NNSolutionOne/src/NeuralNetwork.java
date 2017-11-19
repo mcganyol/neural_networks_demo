@@ -75,8 +75,8 @@ public class NeuralNetwork {
 
 	public void calculateDerivative() {
 		Double ErrorTotalDerivate = - (finalOutput - target); //why the -1 is beyond me at this point
-		for (int i = this.getWidth() - 1; i > 0; --i) { // we dont need the 0th layer as that is the input layer where no backpropagation is needed
-			for (int a = nnLayers.get(i).getDepth() - 1; )
+		for (int a = nnLayers.get(this.getWidth() - 1).getDepth() - 1; a >= 0; --a) { //we need the i-th layer perceptrons in backward order
+			nnLayers.get(this.getWidth() - 1).getPerceptron(a).calculateDerivative(ErrorTotalDerivate);
 		}
 		
 	}

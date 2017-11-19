@@ -1,71 +1,63 @@
 import java.util.ArrayList;
 
-public class InputPerceptron implements IPerceptron{
+//singleton
+public class Bias implements IPerceptron {
+	
+	private static Bias instance = null;
+	private final Double outputValue = 1.0;
 
-	private Double outputValue;
-	
-	
-	public InputPerceptron() {
-		
+	protected Bias( ) {	
 	}
 	
-	
-	public InputPerceptron(Double inputValue) {
-		setOutput(inputValue);
+	public static Bias getInstance() {
+		if(instance == null) {
+			instance = new Bias();
+		}
+	   return instance;
 	}
 	
-	
-	public void setOutput(Double d) {
-		outputValue = d;
-	}
-	
-	
+	@Override
 	public Double getOutput() {
 		return outputValue;
 	}
-	
+
+	@Override
 	public void compute() {
 		
 	}
 
-
 	@Override
 	public void finalizeStructure(ArrayList<IPerceptron> perceptronList) {
-		// input has no left-side connection we don't have to do anything here
 		
 	}
-
 
 	@Override
 	public ArrayList<Double> getWeights() {
 		return null;
 	}
 
-
 	@Override
 	public void setWeight(ArrayList<Double> arrayList) {
-		// this makes no sense here
+	
 	}
 
+	@Override
+	public void setOutput(Double double1) {
+	}
 
 	@Override
 	public void setLinear(boolean lastLayer) {
-		
 	}
-
 
 	@Override
 	public void calculateDerivative(Double errorTotalDerivate) {
-		//pointless
-		
+	
 	}
-
 
 	@Override
 	public ArrayList<Double> getDerivatives() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	
 }
