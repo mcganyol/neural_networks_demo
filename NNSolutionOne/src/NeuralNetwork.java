@@ -16,7 +16,11 @@ public class NeuralNetwork {
 	
 	
 	public ArrayList<Double> compute(ArrayList<Double> inputValues) {
-		return null;
+		nnLayers.get(0).setOutput(inputValues); // we set the input layer values to the input
+		for (int b = 0; b < this.getWidth(); ++b) {
+			nnLayers.get(b).compute();
+		}
+		return nnLayers.get(nnLayers.size()-1).getOutput(); // the last layers output is the output of the neural network
 	}
 
 
@@ -33,6 +37,7 @@ public class NeuralNetwork {
 			}	
 		}
 		nnLayers.get(length-1).setPrevLayer(nnLayers.get(length-2));
+		nnLayers.get(length-1).setLastLayer(true); // because our last layer acts differently :( the perceptrons function to determine the output is different
 		//now we have set all the Layers, we finalize the perceptrons with invoking the corresponding Layer function
 		for (ILayer il : nnLayers) {
 			il.finalizeStructure();

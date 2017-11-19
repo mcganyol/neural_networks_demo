@@ -6,5 +6,8 @@ public interface IPerceptron {
 	public void compute();
 	public void finalizeStructure(ArrayList<IPerceptron> perceptronList);
 	public ArrayList<Double> getWeights();
+	public void setWeight(ArrayList<Double> arrayList);
+	public void setOutput(Double double1);
+	public void setLinear(boolean lastLayer);
 	
 }

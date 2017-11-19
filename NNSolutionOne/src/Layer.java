@@ -6,9 +6,11 @@ public class Layer implements ILayer {
 	ILayer nextLayer;
 	ILayer prevLayer;
 	int depth;
+	private boolean lastLayer;
 	
 	
 	public Layer(int percNum) {
+		lastLayer = false;
 		perceptrons = new ArrayList<IPerceptron>();
 		depth = percNum;
 		for (int i=0; i < depth; ++i) {
@@ -41,7 +43,9 @@ public class Layer implements ILayer {
 
 	@Override
 	public void compute() {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < depth; ++i) {
+			perceptrons.get(i).compute();
+		}
 	}
 
 
@@ -71,6 +75,33 @@ public class Layer implements ILayer {
 	@Override
 	public IPerceptron getPerceptron(int num) {
 		return perceptrons.get(num);
+	}
+
+
+	@Override
+	public void setOutput(ArrayList<Double> readValues) {
+		// makes no sense if it is not input layer
+		
+	}
+
+
+	@Override
+	public ArrayList<Double> getOutput() {
+		ArrayList<Double> retval = new ArrayList<Double>();
+		for (int i = 0; i < depth; ++i) {
+			retval.add(perceptrons.get(i).getOutput());
+		}
+		return retval;
+	}
+
+
+	@Override
+	public void setLastLayer(boolean isit) {
+		lastLayer = isit;
+		for (int i = 0; i < depth; ++i) {
+			perceptrons.get(i).setLinear(lastLayer);
+		}
+		
 	}
 
 }

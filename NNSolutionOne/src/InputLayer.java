@@ -68,5 +68,32 @@ public class InputLayer implements ILayer{
 	public IPerceptron getPerceptron(int num) {
 		return perc.get(num);
 	}
+
+
+	@Override
+	public void setOutput(ArrayList<Double> readValues) {
+		for (int i = 0; i < depth; ++i) {
+			perc.get(i).setOutput(readValues.get(i));	
+		}
+		
+		
+	}
+
+
+	@Override
+	public ArrayList<Double> getOutput() {
+		ArrayList<Double> retval = new ArrayList<Double>();
+		for (int i = 0; i < depth; ++i) {
+			retval.add(perc.get(i).getOutput());
+		}
+		return retval;
+	}
+
+
+	@Override
+	public void setLastLayer(boolean b) {
+		// makes no sense
+		
+	}
 	
 }

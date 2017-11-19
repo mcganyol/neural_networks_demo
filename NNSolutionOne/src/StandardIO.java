@@ -28,12 +28,17 @@ public class StandardIO implements INNIo {
 		
 	}
 	
+	
+	public void writeIntValue(int i) {
+		System.out.printf("%d\n" , i);
+	}
+	
 
 	public void writeIntValues(ArrayList<Double> i) {
 		int length = i.size();
 		for (int a = 0; a < length - 1; ++a) {
 			System.out.printf("%.0f," , i.get(a));
-		}
+		}	
 		System.out.printf("%.0f\n" , i.get(length - 1));
 		
 	}

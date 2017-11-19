@@ -4,6 +4,7 @@ public interface ILayer {
 	
 	
 	
+	public ArrayList<Double> getOutput();
 	public ILayer getPrevLayer();
 	public void setPrevLayer(ILayer prev);
 	public ILayer getNextLayer();
@@ -13,5 +14,7 @@ public interface ILayer {
 	public void finalizeStructure();
 	public ArrayList<IPerceptron> getPerceptronList();
 	public IPerceptron getPerceptron(int num);
+	public void setOutput(ArrayList<Double> readValues);
+	public void setLastLayer(boolean b);
 
 }

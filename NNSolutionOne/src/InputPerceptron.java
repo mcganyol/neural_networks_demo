@@ -40,6 +40,18 @@ public class InputPerceptron implements IPerceptron{
 	public ArrayList<Double> getWeights() {
 		return null;
 	}
+
+
+	@Override
+	public void setWeight(ArrayList<Double> arrayList) {
+		// this makes no sense here
+	}
+
+
+	@Override
+	public void setLinear(boolean lastLayer) {
+		
+	}
 	
 	
 }
