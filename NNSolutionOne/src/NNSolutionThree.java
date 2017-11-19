@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
-public class NNSolutionTwo {
+public class NNSolutionThree {
 
 	private INNIo io;
 	private NeuralNetwork nn;
 	
-	public NNSolutionTwo() {
+	public NNSolutionThree() {
 		//init
 		io = new StandardIO();
 		ArrayList<Double> networkStructure = io.readValues();
@@ -56,10 +56,15 @@ public class NNSolutionTwo {
 			outputTable.add(results);
 		}
 		
+		//target given, calculating derivatives
+		nn.setTarget(1.0);  // it was calculated on paper because i have found no trace of it in the input but it is a vital data nevertheless
+		nn.calculateDerivative();
+		
+		
 		//output
 		
-		io.writeIntValue(numberOfInputs); // how many output lines will be
-		
+		io.writeIntValues(nn.getStructure());
+				
 		for (int i = 0; i < outputTable.size(); ++i) {
 			io.writeValues(outputTable.get(i));
 		}
@@ -68,10 +73,8 @@ public class NNSolutionTwo {
 	}
 	
 	public static void main(String[] args) {
-		new NNSolutionTwo();
+		new NNSolutionThree();
 		
 	}
 	
-	
-
 }

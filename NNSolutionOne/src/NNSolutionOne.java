@@ -6,6 +6,8 @@ public class NNSolutionOne {
 	private NeuralNetwork nn;
 	
 	public NNSolutionOne() {
+		
+		//init
 		io = new StandardIO();
 		ArrayList<Double> networkStructure = io.readValues();
 		
@@ -26,8 +28,9 @@ public class NNSolutionOne {
 		}
 		
 		nn.finalizeStructure();
-		// so far we are dont with initializing the neural network structure from io
+
 		
+		//output
 		
 		io.writeIntValues(nn.getStructure());  // shows the layers and the number of perceptrons
 		

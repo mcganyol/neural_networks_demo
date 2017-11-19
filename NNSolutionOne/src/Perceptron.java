@@ -4,9 +4,11 @@ import java.util.Random;
 public class Perceptron implements IPerceptron {
 
 	private ArrayList<IPerceptron> prevPerceptrons;
-	private ArrayList<Double> weights;   // last para is always the bias
+	private ArrayList<Double> weights;   // last param is always the bias
 	private Double outputValue;
 	private boolean linearPerceptron;
+	private double doutPerDnet; 
+	private ArrayList<Double> derivatives;
 	
 	
 	public Perceptron()  {
@@ -33,10 +35,16 @@ public class Perceptron implements IPerceptron {
 		}
 		inputValue += 1 * weights.get(weights.size() - 1); //it is always 1 on "bias leg" multiplied by it's own weight
 		if (linearPerceptron) {
-			outputValue = inputValue;	
+			outputValue = inputValue;
+			doutPerDnet = 1.0; // linear perceptron x derivate is 1
+			//System.out.println("input:" + inputValue + " output:" +outputValue);
 		}
 		else {
 			outputValue = Math.max(0.0,inputValue);
+			if (inputValue > 0) {
+				doutPerDnet = 1.0;
+			}
+			else doutPerDnet = 0.0;
 		}
 				
 	}
@@ -75,6 +83,17 @@ public class Perceptron implements IPerceptron {
 	@Override
 	public void setLinear(boolean lastLayer) {
 		linearPerceptron = lastLayer;
+		
+	}
+
+
+	@Override
+	public void calculateDerivative(Double errorTotalDerivate) {
+		derivatives = new ArrayList<Double>();
+		for (int i = 0; i < weights.size(); ++i) {
+			derivatives.add(prevPerceptrons.get(i).getOutput() * errorTotalDerivate * doutPerDnet);
+			
+		}
 		
 	}
 	

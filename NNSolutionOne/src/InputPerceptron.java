@@ -52,6 +52,13 @@ public class InputPerceptron implements IPerceptron{
 	public void setLinear(boolean lastLayer) {
 		
 	}
+
+
+	@Override
+	public void calculateDerivative(Double errorTotalDerivate) {
+		//pointless
+		
+	}
 	
 	
 }
