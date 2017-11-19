@@ -20,19 +20,22 @@ public class StandardIO implements INNIo {
 	
 
 	public void writeValues(ArrayList<Double> d) {
-		for(Double value : d) {
-			System.out.printf(value+",");	
+		int length = d.size();
+		for (int a = 0; a < length - 1; ++a) {
+			System.out.printf("%f," , d.get(a));
 		}
-		
+		System.out.printf("%f\n" , d.get(length - 1));
 		
 	}
 	
 
 	public void writeIntValues(ArrayList<Double> i) {
-		for(Double value : i) {
-			
-			System.out.printf("%.0f,", value);	
+		int length = i.size();
+		for (int a = 0; a < length - 1; ++a) {
+			System.out.printf("%.0f," , i.get(a));
 		}
+		System.out.printf("%.0f\n" , i.get(length - 1));
+		
 	}
 	
 }

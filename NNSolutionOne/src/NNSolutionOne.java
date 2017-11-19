@@ -8,11 +8,36 @@ public class NNSolutionOne {
 	public NNSolutionOne() {
 		io = new StandardIO();
 		ArrayList<Double> networkStructure = io.readValues();
-		io.writeIntValues(networkStructure);
-		//ArrayList<Integer> convertedS;
+		
+		nn = new NeuralNetwork();
+		
+		int inputLayerDepth = (int) Math.round(networkStructure.get(0));
+		ILayer inL = new InputLayer(inputLayerDepth);
+		
+		nn.addLayer(inL);
+		
+		networkStructure.remove(0);
+		
+		while (!networkStructure.isEmpty()) {
+			int layerDepth = (int) Math.round(networkStructure.get(0));
+			ILayer lay = new Layer(layerDepth);
+			nn.addLayer(lay);
+			networkStructure.remove(0);
+		}
+		
+		nn.finalizeStructure();
+		// so far we are dont with initializing the neural network structure from io
 		
 		
-		nn = new NeuralNetwork(2, new ArrayList<Integer>()); // bemenetek szama, percepek szama retegenkent egy tombben
+		io.writeIntValues(nn.getStructure());  // shows the layers and the number of perceptrons
+		
+		for (int layer = 1; layer < nn.getWidth(); ++layer) {  //starts from 1 to avoid asking the weights of "input layer" which makes no sense
+			ILayer tempL = nn.getLayer(layer);
+			for (int x = 0; x < tempL.getDepth(); ++x) {
+				io.writeValues(tempL.getPerceptron(x).getWeights());
+			}
+		}
+		
 		
 	}
 	
