@@ -67,19 +67,27 @@ public class NNSolutionFour {
 			nn.setTarget(readInput.get(readInput.size()-1));
 			readInput.remove(readInput.size()-1);
 			
-			nn.compute(readInput).get(0);
+			nn.compute(readInput);
 			nn.calculateDerivative();
 			nn.modifyWeights();
 		}
 		
 		for (int x = learningSampleNr; x < numberOfInputsInt; ++x) { // we read inputs compute it and store the outputs
-			//erre mar mukodik a betanult, de most nem kell
+			ArrayList<Double> readInput = io.readValues(); 
+			
+			nn.setTarget(readInput.get(readInput.size()-1));
+			readInput.remove(readInput.size()-1);
+			
+			nn.compute(readInput);
+			nn.MergeNegyzetesHiba();
 		}
 		
 		
-		
-		
 		//output
+		
+		ArrayList<Double> negyzetesH = new ArrayList<Double>();
+		negyzetesH.add(nn.getAtlagosNegyzetesHiba());
+		io.writeValues(negyzetesH);
 		
 		io.writeIntValues(nn.getStructure());
 				

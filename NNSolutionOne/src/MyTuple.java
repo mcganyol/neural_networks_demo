@@ -15,7 +15,7 @@ public class MyTuple {
 	  }
 	  else {
 		  Double temp = szamlalo * ertek;
-		  temp = temp + Math.pow(target - output, 2);;
+		  temp = temp + Math.pow(target - output, 2);
 		  szamlalo++;
 		  ertek = temp / szamlalo;
 	  }

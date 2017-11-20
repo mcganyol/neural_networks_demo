@@ -124,9 +124,9 @@ public class Perceptron implements IPerceptron {
 	@Override
 	public void modifyWeights(Double learningRate) {
 		for (int i = 0; i < weights.size(); ++i) {
-			System.out.println(weights.size() + "weights: " + weights.get(i)+ ", der: " + derivatives.get(i)+ " learning: " + learningRate);
+			//System.out.println(weights.size() + "weights: " + weights.get(i)+ ", der: " + derivatives.get(i)+ " learning: " + learningRate);
 			weights.set(i, weights.get(i) + derivatives.get(i) * learningRate); //i-th element is changed to something else
-			System.out.println("modosult suly: "+ weights.get(i));
+			//System.out.println("modosult suly: "+ weights.get(i));
 		}
 		
 	}
