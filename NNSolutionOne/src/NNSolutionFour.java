@@ -73,7 +73,7 @@ public class NNSolutionFour {
 		}
 		
 		for (int x = learningSampleNr; x < numberOfInputsInt; ++x) { // we read inputs compute it and store the outputs
-			//erre mar mukodik a betanult
+			//erre mar mukodik a betanult, de most nem kell
 		}
 		
 		

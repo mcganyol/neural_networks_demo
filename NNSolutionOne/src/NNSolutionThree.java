@@ -49,15 +49,12 @@ public class NNSolutionThree {
 		
 		int numberOfInputs = io.readValues().get(0).intValue(); // how many input lines will follow
 		
-		ArrayList<ArrayList<Double>> outputTable = new ArrayList<ArrayList<Double>>();
 		for (int x = 0; x < numberOfInputs; ++x) { // we read inputs compute it and store the outputs
 			ArrayList<Double> readInput = io.readValues(); 
-			ArrayList<Double> results = nn.compute(readInput);
-			outputTable.add(results);
+			nn.compute(readInput);
 		}
 		
 		//target given, calculating derivatives
-		nn.setTarget(1.0);  // it was calculated on paper because i have found no trace of it in the input but it is a vital data nevertheless
 		nn.calculateDerivative();
 		
 		

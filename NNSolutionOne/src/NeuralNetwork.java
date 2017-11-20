@@ -5,11 +5,13 @@ public class NeuralNetwork {
 	private ArrayList<ILayer> nnLayers;
 	private Double finalOutput;  // it should be an ArrayList<Double> if not a single output
 	private Double target;
-	private double learningRate;
+	private Double learningRate;
+	private MyTuple atlagosNegyzetesHiba;
 	
 	
 	public NeuralNetwork() {
 		nnLayers = new ArrayList<ILayer>();
+		atlagosNegyzetesHiba = new MyTuple();
 	}
 	
 	
@@ -74,10 +76,10 @@ public class NeuralNetwork {
 
 
 	public void calculateDerivative() {
-		Double ErrorTotalDerivate = finalOutput - target; //why the -1 is beyond me at this point
-		System.out.println("output: " + finalOutput + " target:" + target);
+		//Double ErrorTotalDerivate = finalOutput - target;  // here we dont need error
+		//System.out.println("output: " + finalOutput + " target:" + target);
 		for (int a = nnLayers.get(this.getWidth() - 1).getDepth() - 1; a >= 0; --a) { //we need the i-th layer perceptrons in backward order
-			nnLayers.get(this.getWidth() - 1).getPerceptron(a).calculateDerivative(ErrorTotalDerivate);
+			nnLayers.get(this.getWidth() - 1).getPerceptron(a).calculateDerivative(1.0);
 		}
 	}
 
@@ -95,6 +97,14 @@ public class NeuralNetwork {
 			
 		}
 		
+	}
+	
+	public void MergeNegyzetesHiba() {
+		atlagosNegyzetesHiba.addValue(finalOutput, target);
+	}
+	
+	public Double getAtlagosNegyzetesHiba() {
+		return atlagosNegyzetesHiba.getValue();
 	}
 
 }

@@ -9,6 +9,7 @@ public class Perceptron implements IPerceptron {
 	private boolean linearPerceptron;
 	private double doutPerDnet; 
 	private ArrayList<Double> derivatives;
+	private boolean derivatesPropagatedAlready;
 	
 	
 	public Perceptron()  {
@@ -19,7 +20,7 @@ public class Perceptron implements IPerceptron {
 	void randomWeight() { // package visibility :)
 		weights = new ArrayList<Double>();
 		Random r = new Random();
-		for (int i = 0; i < prevPerceptrons.size() - 2; ++i) { // -2 because we dont want a random value for bias
+		for (int i = 0; i < prevPerceptrons.size() - 1; ++i) { // -2 because we dont want a random value for bias
 			Double random = r.nextGaussian()*0.1; 		// 0 varhato erteku, 0.1 szorasu random szamok
 			weights.add(random);
 		}
@@ -28,7 +29,9 @@ public class Perceptron implements IPerceptron {
 	
 	
 	public void compute() {
+		derivatesPropagatedAlready = false;
 		double inputValue = 0;
+		derivatives = new ArrayList<Double>(); 
 		for (int i = 0; i < prevPerceptrons.size(); ++i) {
 			inputValue += prevPerceptrons.get(i).getOutput() * weights.get(i);
 		}
@@ -89,14 +92,24 @@ public class Perceptron implements IPerceptron {
 
 
 	@Override
-	public void calculateDerivative(Double errorTotalDerivate) {
-		derivatives = new ArrayList<Double>();  // calculate his own derivatives
-		for (int i = 0; i < weights.size(); ++i) {
-			derivatives.add(prevPerceptrons.get(i).getOutput() * errorTotalDerivate * doutPerDnet);
+	public void calculateDerivative(Double incomingWeight) {
+		
+		if (derivatives.isEmpty()) {
+			for (int i = 0; i < weights.size(); ++i) {
+				derivatives.add(prevPerceptrons.get(i).getOutput() * doutPerDnet * incomingWeight);
+			}
+			// and propagate his w to his left-side perceptrons to calculate
+			for (int i = 0; i < prevPerceptrons.size() -1; ++i) { // -1 because we dont need to call it for bias direcly as it is not a real perspectron...
+				prevPerceptrons.get(i).calculateDerivative(weights.get(i));
+			}			
+			derivatesPropagatedAlready = true;
 		}
-		// and propagate his w to his left-side perceptrons to calculate
-		for (int i = 0; i < prevPerceptrons.size() -1; ++i) { // -1 because we dont need to call it for bias direcly as it is not a real perspectron...
-			prevPerceptrons.get(i).calculateDerivative(weights.get(i)*errorTotalDerivate);
+		else { //it's not the first time derivates calculated called on this one in this "run"
+			
+			for (int i = 0; i < weights.size(); ++i) {
+				derivatives.set(i, derivatives.get(i) + prevPerceptrons.get(i).getOutput() * doutPerDnet * incomingWeight);
+			}
+			
 		}
 		
 	}
@@ -112,7 +125,7 @@ public class Perceptron implements IPerceptron {
 	public void modifyWeights(Double learningRate) {
 		for (int i = 0; i < weights.size(); ++i) {
 			System.out.println(weights.size() + "weights: " + weights.get(i)+ ", der: " + derivatives.get(i)+ " learning: " + learningRate);
-			weights.set(i, weights.get(i) - derivatives.get(i) * learningRate); //i-th element is changed to something else
+			weights.set(i, weights.get(i) + derivatives.get(i) * learningRate); //i-th element is changed to something else
 			System.out.println("modosult suly: "+ weights.get(i));
 		}
 		
